@@ -1,0 +1,20 @@
+.wrapper {
+  width: 12.5rem;
+}
+
+.loading::after {
+  content: '';
+  height: 3px;
+  background: black;
+  display: inline-block;
+  animation: transition 0.5s linear forwards infinite;
+}
+
+@keyframes transition {
+  from {
+    width: 0px;
+  }
+  to {
+    width: 150px;
+  }
+}

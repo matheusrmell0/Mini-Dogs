@@ -5,13 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 const Header = () => {
   const dispatch = useDispatch();
-  const { data } = useSelector((state) => state.login.user);
-
-  function handleClick() {
-    console.log('PROCURAR SOLUCAO PARA LOGOUT');
-    window.localStorage.removeItem('token');
-    dispatch(logout());
-  }
+  const { data, loading } = useSelector((state) => state.login.user);
 
   return (
     <header className={`${styles.header} container`}>
@@ -19,15 +13,21 @@ const Header = () => {
         <ul>
           <li>Mini Dogs</li>
           <li>
-            {data ? (
+            {loading ? (
               <button
-                onClick={handleClick}
-                className={`${styles.btnDisabled}`}
+                disabled
+                className={`${styles.btn} 
+              ${loading ? styles.loading : ''}
+              ${data ? styles.loaded : ''}
+              `}
               ></button>
             ) : (
               <button
-                disabled
-                className={`${styles.btn}`}
+                onClick={() => dispatch(logout())}
+                className={`${styles.btn} 
+                ${loading ? styles.loading : ''}
+                ${data ? styles.loaded : ''}
+                `}
               ></button>
             )}
           </li>

@@ -25,9 +25,9 @@ export const USER_GET = (token) => {
   };
 };
 
-export const PHOTOS_API = () => {
+export const PHOTOS_API = (page) => {
   return {
-    url: `${URL_API}api/photo/?_page=1&_total=3&_user=0`,
+    url: `${URL_API}api/photo/?_page=${page}&_total=3&_user=0`,
     options: {
       method: 'GET',
       cache: 'no-store',

@@ -13,7 +13,8 @@
   margin-top: 20px;
 }
 
-.btn{
+.btn,
+.btn2 {
   margin-top: 20px;
   max-width: fit-content;
   padding: 12px 24px;
@@ -22,9 +23,34 @@
   background: black;
   font-size: 1.2rem;
   font-weight: bold;
+}
+
+.btn:hover {
+  background-color: gray;
+}
+
+.btn {
   cursor: pointer;
 }
 
-.btn:hover{
-  background-color: gray;
+.btn2{
+  display: flex;
+  align-items: center;
+}
+.btn2::after {
+  margin-left: 10px;
+  content: '';
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+  border: 3px solid white;
+  border-radius: 50%;
+  border-right: 3px solid transparent;
+  animation: 1s loading infinite forwards;
+}
+
+@keyframes loading {
+  to {
+    transform: rotate(360deg);
+  }
 }

@@ -2,6 +2,7 @@ import createAsyncSlice from './helper/createAsyncSlice';
 import { TOKEN_POST, USER_GET } from '../api';
 import { combineReducers } from '@reduxjs/toolkit';
 import getLocalStorage from './helper/getLocalStorage';
+import { removePhotos } from './photos';
 
 const token = createAsyncSlice({
   name: 'token',
@@ -11,6 +12,9 @@ const token = createAsyncSlice({
     },
   },
   reducers: {
+    removeToken(state) {
+      state.data = null;
+    },
     fetchSuccess: {
       reducer(state, action) {
         state.loading = false;
@@ -38,12 +42,19 @@ const token = createAsyncSlice({
 
 const user = createAsyncSlice({
   name: 'user',
+  reducers: {
+    removeUser(state) {
+      state.data = null;
+    },
+  },
   fetchConfig: (token) => {
     const { url, options } = USER_GET(token);
     return { url, options };
   },
 });
 
+const { removeToken } = token.actions;
+const { removeUser } = user.actions;
 const fetchToken = token.asyncAction;
 const fetchUser = user.asyncAction;
 const reducer = combineReducers({ token: token.reducer, user: user.reducer });
@@ -66,7 +77,9 @@ export const autoLogin = () => async (dispatch, getState) => {
   }
 };
 
-export const logout = () => (dispatch, getState) => {
-  const { data } = getState().login.user;
-  console.log(data);
+export const logout = () => (dispatch) => {
+  dispatch(removeUser());
+  dispatch(removeToken());
+  dispatch(removePhotos())
+  window.localStorage.removeItem('token');
 };
